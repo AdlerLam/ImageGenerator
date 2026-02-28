@@ -6,7 +6,7 @@ export type JewelryType = "necklace" | "earring" | "ring";
 const JEWELRY_BASE_DIR = "G:\\阿里云盘\\电商\\产品_待生成";
 const OUTPUT_BASE_DIR = "G:\\阿里云盘\\电商\\产品_已生成";
 const DEFAULT_MODEL = "gemini-3.1-flash-image-preview";
-const DEFAULT_CONCURRENCY = 5;
+const DEFAULT_CONCURRENCY = 2;
 
 export const PROJECT_ROOT = path.resolve(
     path.dirname(fileURLToPath(import.meta.url)),
@@ -93,7 +93,7 @@ export function buildConfig(argv: string[]): Config {
         apiKey,
         modelImagePath: args["model"],
         jewelryDir: `${JEWELRY_BASE_DIR}\\${date}\\${jewelryType}`,
-        outputDir: `${OUTPUT_BASE_DIR}\\${date}`,
+        outputDir: `${OUTPUT_BASE_DIR}\\${date}\\${jewelryType}`,
         jewelryType,
         concurrency: isNaN(concurrency) ? DEFAULT_CONCURRENCY : concurrency,
         geminiModel: args["model-name"] ?? DEFAULT_MODEL,

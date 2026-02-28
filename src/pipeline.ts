@@ -17,8 +17,8 @@ export interface PipelineResult {
 /**
  * Runs the full image generation pipeline.
  * - Uses p-limit to cap concurrent API requests.
- * - On success: saves result image, deletes source file.
- * - On failure: logs to failedList, does NOT delete source.
+ * - On success: saves result image, moves source file to output dir.
+ * - On failure: logs to failedList, does NOT move source.
  * - Prints real-time progress to stdout.
  */
 export async function runPipeline(
@@ -50,8 +50,9 @@ export async function runPipeline(
 
                 fs.writeFileSync(outputPath, imageBuffer);
 
-                // Delete source file on success
-                fs.unlinkSync(jewelryPath);
+                // Move source file to output dir on success
+                const movedSourcePath = path.join(config.outputDir, path.basename(jewelryPath));
+                fs.renameSync(jewelryPath, movedSourcePath);
 
                 done++;
                 console.log(`[${done}/${total}] ✓ ${path.basename(jewelryPath)}`);
