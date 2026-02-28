@@ -128,6 +128,8 @@ main.ts
 - 模式：**Image Editing（text-and-image-to-image）**
 - 输入：模特图（base64）+ 首饰图（base64）+ prompt 文字
 - 输出：合成后产品图（base64 → 保存为 JPEG）
+- 官方文档：[Gemini API Image Generation (JavaScript)](https://ai.google.dev/gemini-api/docs/image-generation#javascript_1)
+
 
 ### 6.3 Prompt 模板管理
 
