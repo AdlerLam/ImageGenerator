@@ -3,8 +3,6 @@ import { fileURLToPath } from "node:url";
 
 export type JewelryType = "necklace" | "earring" | "ring";
 
-const JEWELRY_BASE_DIR = "G:\\阿里云盘\\电商\\产品_待生成";
-const OUTPUT_BASE_DIR = "G:\\阿里云盘\\电商\\产品_已生成";
 const DEFAULT_MODEL = "gemini-3.1-flash-image-preview";
 const DEFAULT_CONCURRENCY = 2;
 
@@ -84,6 +82,18 @@ export function buildConfig(argv: string[]): Config {
         process.exit(1);
     }
 
+    const jewelryBaseDir = process.env.JEWELRY_BASE_DIR;
+    if (!jewelryBaseDir) {
+        console.error("❌ JEWELRY_BASE_DIR is not set. Please add it to your .env file.");
+        process.exit(1);
+    }
+
+    const outputBaseDir = process.env.OUTPUT_BASE_DIR;
+    if (!outputBaseDir) {
+        console.error("❌ OUTPUT_BASE_DIR is not set. Please add it to your .env file.");
+        process.exit(1);
+    }
+
     const date = args["date"];
     const concurrency = args["concurrency"]
         ? parseInt(args["concurrency"], 10)
@@ -92,8 +102,8 @@ export function buildConfig(argv: string[]): Config {
     return {
         apiKey,
         modelImagePath: args["model"],
-        jewelryDir: `${JEWELRY_BASE_DIR}\\${date}\\${jewelryType}`,
-        outputDir: `${OUTPUT_BASE_DIR}\\${date}\\${jewelryType}`,
+        jewelryDir: `${jewelryBaseDir}/${date}/${jewelryType}`,
+        outputDir: `${outputBaseDir}/${date}/${jewelryType}`,
         jewelryType,
         concurrency: isNaN(concurrency) ? DEFAULT_CONCURRENCY : concurrency,
         geminiModel: args["model-name"] ?? DEFAULT_MODEL,
